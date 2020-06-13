@@ -16,6 +16,6 @@ func main() {
 
 	// 路由设置
 	route.SetupRouter(engine)
-	engine.Run(":9999")
+	engine.Run(":6666")
 }
 

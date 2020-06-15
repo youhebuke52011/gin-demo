@@ -38,14 +38,16 @@ func SetUp() gin.HandlerFunc {
 		startTime := time.Now().UnixNano() / 1000
 		c.Next()
 		resp := response.Resp{}
-		if err := json.Unmarshal(logRow.buf.Bytes(), &resp); err != nil {
-			fmt.Printf("%v\n", err)
+		if logRow.buf.String() != "" {
+			if err := json.Unmarshal(logRow.buf.Bytes(), &resp); err != nil {
+				fmt.Printf("logger json:%v\n", err)
+			}
 		}
 		endTime := time.Now().UnixNano() / 1000
 
 		if c.Request.Method == "POST" {
 			if err := c.Request.ParseForm(); err != nil {
-				fmt.Printf("%v\n", err)
+				fmt.Printf("logger parse: %v\n", err)
 			}
 		}
 		accLogMap := map[string]interface{}{

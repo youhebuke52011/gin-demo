@@ -24,13 +24,13 @@ func SetUp() gin.HandlerFunc {
 				// Check for a broken connection, as it is not really a
 				// condition that warrants a panic stack trace.
 
-				stack := stack(0)
+				//stack := stack(3)
 				//loger := log.WithFields(log.Fields{
 				//	"emsg": err, "stack": string(stack), "signature": sig,
 				//})
 				//loger.Error("panic")
-				fmt.Println(string(stack))
-				fmt.Println(err)
+				//fmt.Println(string(stack))
+				//fmt.Println(err)
 				// If the connection is dead, we can't write a status to it.
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}

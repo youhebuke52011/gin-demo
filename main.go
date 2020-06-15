@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	_ "gin-demo/config"
 	"gin-demo/route"
+	_ "gin-demo/utils/validator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,4 +20,3 @@ func main() {
 	route.SetupRouter(engine)
 	engine.Run(":6666")
 }
-

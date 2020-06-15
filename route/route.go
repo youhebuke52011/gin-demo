@@ -1,6 +1,7 @@
 package route
 
 import (
+	"gin-demo/module/user"
 	"gin-demo/route/middleware/exception"
 	"gin-demo/route/middleware/logger"
 	"github.com/gin-gonic/gin"
@@ -27,4 +28,11 @@ func SetupRouter(engine *gin.Engine) {
 			"msg": "pong",
 		})
 	})
+
+	userGroup := engine.Group("/user")
+	{
+		userGroup.GET("/:id", user.Get)
+
+		userGroup.POST("", user.Add)
+	}
 }

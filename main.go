@@ -4,7 +4,7 @@ import (
 	"fmt"
 	_ "gin-demo/config"
 	"gin-demo/route"
-	_ "gin-demo/utils/validator"
+	_ "gin-demo/utils/validater"
 	"github.com/gin-gonic/gin"
 )
 

@@ -2,14 +2,18 @@ package user
 
 import (
 	"fmt"
+	"gin-demo/utils/validater"
+
+	//"gin-demo/utils/validater"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 )
 
 func bind(s interface{}, c *gin.Context) (interface{}, error) {
-	b := binding.Default(c.Request.Method, c.ContentType())
-	if err := c.ShouldBindWith(s, b); err != nil {
+	//b := binding.Default(c.Request.Method, c.ContentType())
+	if err := c.ShouldBindBodyWith(s, binding.JSON);err != nil {
+	//if err := c.ShouldBindWith(s, b); err != nil {
 		return nil, err
 	}
 	return s, nil
@@ -29,12 +33,12 @@ func Add(c *gin.Context) {
 		return
 	}
 
-	validate := validator.New()
-	if err := validate.Struct(&args); err != nil {
-		fmt.Printf("validate add:%v\n", err)
-		c.JSON(200, gin.H{"code": 400, "data": gin.H{}})
-		return
-	}
+	//validate := validator.New()
+	//if err := validate.Struct(args); err != nil {
+	//	fmt.Printf("validate add:%v\n", err)
+	//	c.JSON(200, gin.H{"code": 400, "data": gin.H{}})
+	//	return
+	//}
 
 	res := args.(*ProductAdd)
 	fmt.Println(res)
@@ -45,4 +49,11 @@ func Add(c *gin.Context) {
 
 func Get(c *gin.Context) {
 
+}
+
+func init() {
+	v := binding.Validator.Engine().(*validator.Validate)
+
+	err := v.RegisterValidation("enum", validater.ValidEnum)
+	fmt.Println(err)
 }

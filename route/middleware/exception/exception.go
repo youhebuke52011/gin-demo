@@ -30,7 +30,7 @@ func SetUp() gin.HandlerFunc {
 				//})
 				//loger.Error("panic")
 				//fmt.Println(string(stack))
-				//fmt.Println(err)
+				fmt.Println(err)
 				// If the connection is dead, we can't write a status to it.
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}

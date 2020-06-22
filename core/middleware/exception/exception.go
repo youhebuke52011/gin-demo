@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"runtime"
 )
@@ -24,13 +25,11 @@ func SetUp() gin.HandlerFunc {
 				// Check for a broken connection, as it is not really a
 				// condition that warrants a panic stack trace.
 
-				//stack := stack(3)
-				//loger := log.WithFields(log.Fields{
-				//	"emsg": err, "stack": string(stack), "signature": sig,
-				//})
-				//loger.Error("panic")
-				//fmt.Println(string(stack))
-				fmt.Println(err)
+				stack := stack(3)
+				loger := log.WithFields(log.Fields{
+					"emsg": err, "stack": string(stack), "signature": "",
+				})
+				loger.Error("panic")
 				// If the connection is dead, we can't write a status to it.
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	_ "gin-demo/config"
-	"gin-demo/route"
+	"gin-demo/core"
 	_ "gin-demo/utils/validater"
 	"github.com/gin-gonic/gin"
 )
@@ -17,6 +17,6 @@ func main() {
 	engine := gin.New()
 
 	// 路由设置
-	route.SetupRouter(engine)
+	core.SetupRouter(engine)
 	engine.Run(":6666")
 }

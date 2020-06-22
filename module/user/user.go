@@ -3,6 +3,7 @@ package user
 import (
 	"fmt"
 	"gin-demo/utils/validater"
+	"reflect"
 
 	//"gin-demo/utils/validater"
 	"github.com/gin-gonic/gin"
@@ -26,12 +27,12 @@ type ProductAdd struct {
 }
 
 func Add(c *gin.Context) {
-	args, err := bind(&ProductAdd{}, c)
-	if err != nil {
-		c.JSON(400, nil)
-		fmt.Println(err)
-		return
-	}
+	//args, err := bind(&ProductAdd{}, c)
+	//if err != nil {
+	//	c.JSON(400, nil)
+	//	fmt.Println(err)
+	//	return
+	//}
 
 	//validate := validator.New()
 	//if err := validate.Struct(args); err != nil {
@@ -39,6 +40,15 @@ func Add(c *gin.Context) {
 	//	c.JSON(200, gin.H{"code": 400, "data": gin.H{}})
 	//	return
 	//}
+
+	//res := args.(*ProductAdd)
+	//fmt.Println(res)
+
+	typs := reflect.TypeOf(ProductAdd{})
+	argv := reflect.New(typs)
+	args := argv.Interface()
+	errs := c.ShouldBindBodyWith(args, binding.JSON)
+	fmt.Println(errs)
 
 	res := args.(*ProductAdd)
 	fmt.Println(res)

@@ -12,6 +12,6 @@ func init() {
 	gin.SetMode(gin.ReleaseMode)
 	Engine = gin.New()
 	// middleware
-	Engine.Use(logger.SetUp(), exception.SetUp())
+	Engine.Use(exception.SetUp(), logger.SetUp())
 }
 

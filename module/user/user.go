@@ -21,34 +21,22 @@ func bind(s interface{}, c *gin.Context) (interface{}, error) {
 }
 
 type ProductAdd struct {
-	Id   int    `json:"id" validate:"required,enum=1"`
-	Name string `json:"name" validate:"required"`
+	Id   int    `json:"id" form:"id" binding:"required,gt=18"`
+	Name string `json:"name" form:"name" binding:"required"`
 	//Name string `form:"name" json:"name" validate:"required,enum"`
 }
 
 func Add(c *gin.Context) {
-	//args, err := bind(&ProductAdd{}, c)
-	//if err != nil {
-	//	c.JSON(400, nil)
-	//	fmt.Println(err)
-	//	return
-	//}
-
-	//validate := validator.New()
-	//if err := validate.Struct(args); err != nil {
-	//	fmt.Printf("validate add:%v\n", err)
-	//	c.JSON(200, gin.H{"code": 400, "data": gin.H{}})
-	//	return
-	//}
-
-	//res := args.(*ProductAdd)
-	//fmt.Println(res)
-
-	typs := reflect.TypeOf(ProductAdd{})
+	typs := c.Keys["type"].(reflect.Type)
+	//typs := reflect.TypeOf(ProductAdd{})
 	argv := reflect.New(typs)
 	args := argv.Interface()
-	errs := c.ShouldBindBodyWith(args, binding.JSON)
-	fmt.Println(errs)
+	err := c.ShouldBindBodyWith(args, binding.JSON)
+	if err == nil {
+		c.Set("args", args)
+	}
+
+	//fmt.Println(c.Request.Header)
 
 	res := args.(*ProductAdd)
 	fmt.Println(res)

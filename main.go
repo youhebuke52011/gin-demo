@@ -4,23 +4,30 @@ import (
 	"fmt"
 	_ "gin-demo/config"
 	"gin-demo/core"
+	"gin-demo/core/middleware/exception"
+	"gin-demo/core/middleware/logger"
 	_ "gin-demo/utils/validater"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"os"
 )
 
+var Engine *gin.Engine
+
 func init() {
-	fmt.Println("init conf!!!")
+	fmt.Println("init main!!!")
+	log.SetLevel(log.DebugLevel)
 	log.WithFields(log.Fields{
 		"animal": "walrus",
 	}).Info("A walrus appears")
-	gin.SetMode("debug")
+	log.SetOutput(os.Stdout)
 }
 
 func main() {
-	engine := gin.New()
+	Engine = gin.New()
 
 	// 路由设置
-	core.SetupRouter(engine)
-	engine.Run(":6666")
+	Engine.Use(exception.SetUp(), logger.SetUp())
+	core.SetupRouter(Engine)
+	Engine.Run(":6666")
 }

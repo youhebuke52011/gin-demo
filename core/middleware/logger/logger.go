@@ -27,7 +27,6 @@ func (lgw logRowWrite) WriteString(s string) (int, error) {
 }
 
 func SetUp() gin.HandlerFunc {
-	
 	go handleAccessLog()
 	return func(c *gin.Context) {
 		logRow := &logRowWrite{

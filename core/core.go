@@ -1,17 +1,31 @@
 package core
 
 import (
-	"gin-demo/core/middleware/exception"
-	"gin-demo/core/middleware/logger"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"reflect"
 )
 
-var Engine *gin.Engine
+type CheckHandle func(ctx *gin.Context) bool
+type FunHandle func(ctx *gin.Context)
+
+func HandleCore(typ reflect.Type, handle FunHandle, checks []CheckHandle) func(*gin.Context) {
+	return func(c *gin.Context) {
+		c.Set("type", typ)
+		for _, cb := range checks {
+			if !cb(c) {
+				return
+			}
+		}
+		handle(c)
+	}
+}
+
 
 func init() {
-	gin.SetMode(gin.ReleaseMode)
-	Engine = gin.New()
-	// middleware
-	Engine.Use(exception.SetUp(), logger.SetUp())
+	fmt.Println("init core")
 }
+
+
+
 

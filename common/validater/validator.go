@@ -27,6 +27,16 @@ func validEnum(v validator.FieldLevel) bool {
 	return false
 }
 
+//func validAPI(v validator.FieldLevel) bool {
+//	apis := v.Field().String()
+//	for _, r := range Engine.Routes() {
+//		if r.Path == apis {
+//			return true
+//		}
+//	}
+//	return false
+//}
+
 func init() {
 	fmt.Println("init validator!!!")
 	v := binding.Validator.Engine().(*validator.Validate)

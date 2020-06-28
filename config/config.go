@@ -2,10 +2,40 @@ package config
 
 import "fmt"
 
-type Config struct {
+type CommonConf struct {
 }
 
-var Conf Config
+type MysqlConf struct {
+}
+
+type RpcConf struct {
+}
+
+type RedisConf struct {
+}
+
+var (
+	conf CommonConf
+	mysqlConf MysqlConf
+	rpcConf RpcConf
+	redisConf RedisConf
+)
+
+func GetConf() CommonConf {
+	return conf
+}
+
+func GetMysqlConf() MysqlConf {
+	return mysqlConf
+}
+
+func GetRpcConf() RpcConf {
+	return rpcConf
+}
+
+func GetRedisConf() RedisConf {
+	return redisConf
+}
 
 func init() {
 	// config

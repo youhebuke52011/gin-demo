@@ -4,9 +4,8 @@ import (
 	"fmt"
 	_ "gin-demo/config"
 	"gin-demo/core"
-	"gin-demo/core/middleware/exception"
-	"gin-demo/core/middleware/logger"
-	_ "gin-demo/utils/validater"
+	"gin-demo/core/middleware"
+	_ "gin-demo/common/validater"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"os"
@@ -27,7 +26,7 @@ func main() {
 	Engine = gin.New()
 
 	// 路由设置
-	Engine.Use(exception.SetUp(), logger.SetUp())
+	Engine.Use(middleware.Exception(), middleware.Logger())
 	core.SetupRouter(Engine)
 	Engine.Run(":6666")
 }

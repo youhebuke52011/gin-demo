@@ -1,10 +1,9 @@
 package core
 
 import (
-	"gin-demo/core/middleware/binding"
-	"gin-demo/core/middleware/test"
+	"gin-demo/core/middleware"
 	"gin-demo/module/user"
-	"gin-demo/utils/compression"
+	"gin-demo/common/compression"
 	"github.com/gin-gonic/contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -32,10 +31,10 @@ func SetupRouter(engine *gin.Engine) {
 	{
 
 		userGroup.GET("/:id",  HandleCore(
-			reflect.TypeOf(user.GetEntity{}), user.Get, []CheckHandle{binding.BindParam}))
+			reflect.TypeOf(user.GetEntity{}), user.Get, []CheckHandle{middleware.BindParam}))
 
-		userGroup.POST("", test.SetUp(), HandleCore(
-			reflect.TypeOf(user.AddEntity{}), user.Add, []CheckHandle{binding.BindParam}))
+		userGroup.POST("", middleware.TestMiddleWare(), HandleCore(
+			reflect.TypeOf(user.AddEntity{}), user.Add, []CheckHandle{middleware.BindParam}))
 	}
 	//gzip.Gzip(gzip.DefaultCompression)
 

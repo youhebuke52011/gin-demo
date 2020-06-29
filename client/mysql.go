@@ -8,7 +8,7 @@ import (
 )
 
 type MysqlCli struct {
-	demo *gorm.DB
+	Demo *gorm.DB
 }
 
 var (
@@ -20,7 +20,7 @@ func GetMysqlCli() *MysqlCli {
 }
 
 func (mysql *MysqlCli) Close() {
-	mysql.demo.Close()
+	mysql.Demo.Close()
 }
 
 func getMysqlConn(database, user, password, addr string) *gorm.DB {
@@ -35,7 +35,9 @@ func getMysqlConn(database, user, password, addr string) *gorm.DB {
 }
 
 func init() {
-	mysqlCli = &MysqlCli{
-		demo: getMysqlConn("", "", "", ""),
-	}
+	//conf := config.GetConf()
+	//demoConf := conf.GetStringMapString("mysql.demo")
+	//mysqlCli = &MysqlCli{
+	//	demo: getMysqlConn(demoConf["database"], demoConf["user"], demoConf["password"], demoConf["addr"]),
+	//}
 }

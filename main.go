@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"gin-demo/client"
+	_ "gin-demo/common/validater"
 	_ "gin-demo/config"
 	"gin-demo/core"
 	"gin-demo/core/middleware"
-	_ "gin-demo/common/validater"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"os"
+	"net/http"
+	_ "net/http/pprof"
 )
 
 var Engine *gin.Engine
@@ -16,17 +18,25 @@ var Engine *gin.Engine
 func init() {
 	fmt.Println("init main!!!")
 	log.SetLevel(log.DebugLevel)
-	log.WithFields(log.Fields{
-		"animal": "walrus",
-	}).Info("A walrus appears")
-	log.SetOutput(os.Stdout)
+	//log.SetOutput(os.Stdout)
+	go func() {
+		// net/http/pprof 注册是的默认的mux
+		http.ListenAndServe(":6060", nil)
+	}()
+}
+
+func cancel() {
+	client.GetMysqlCli().Close()
+	client.GetRedisCli().Close()
 }
 
 func main() {
 	Engine = gin.New()
+	defer cancel()
 
 	// 路由设置
 	Engine.Use(middleware.Exception(), middleware.Logger())
 	core.SetupRouter(Engine)
 	Engine.Run(":6666")
+
 }

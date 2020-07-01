@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"gin-demo/common"
 	"gin-demo/common/response"
 	"github.com/gin-gonic/gin"
 	"time"
@@ -64,17 +65,9 @@ func Logger() gin.HandlerFunc {
 			"response_msg":      resp.Msg,
 			//"response_data":     resp.Data,
 		}
-		accLogJson, _ := Encode(accLogMap)
+		accLogJson, _ := common.Encode(accLogMap)
 		logRowChannel <- accLogJson
 	}
-}
-
-func Encode(v interface{}) (string, error) {
-	bytes, err := json.Marshal(v)
-	if err != nil {
-		return "", err
-	}
-	return string(bytes), nil
 }
 
 func handleAccessLog() {

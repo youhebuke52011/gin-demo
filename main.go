@@ -1,7 +1,6 @@
 package main
 
 import (
-	"gin-demo/client"
 	_ "gin-demo/common/validater"
 	_ "gin-demo/config"
 	"gin-demo/core"
@@ -11,13 +10,18 @@ import (
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	_ "net/http/pprof"
+	"os"
 )
 
 var Engine *gin.Engine
 
 func init() {
-	log.SetLevel(log.DebugLevel)
-	//log.SetOutput(os.Stdout)
+	log.SetLevel(log.InfoLevel)
+	//设置日志格式
+	log.SetFormatter(&log.TextFormatter{
+		TimestampFormat:"2006-01-02 15:04:05",
+	})
+	log.SetOutput(os.Stdout)
 	go func() {
 		// net/http/pprof 注册是的默认的mux
 		http.ListenAndServe(":6060", nil)
@@ -25,8 +29,8 @@ func init() {
 }
 
 func cancel() {
-	client.GetMysqlCli().Close()
-	client.GetRedisCli().Close()
+	//client.GetMysqlCli().Close()
+	//client.GetRedisCli().Close()
 	cron.Close()
 }
 

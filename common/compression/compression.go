@@ -33,7 +33,7 @@ func KGDecodeAndGz(rData string, res *map[string]interface{}) error {
 	if err = json.Unmarshal(dataBytes, res); err != nil {
 		return err
 	}
-	fmt.Println(res)
+	//fmt.Println(res)
 	fmt.Println(123)
 	return nil
 }

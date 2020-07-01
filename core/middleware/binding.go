@@ -18,9 +18,10 @@ func BindParam(c *gin.Context) bool {
 		tips = []string{}
 		argv = reflect.New(typ)
 		args = argv.Interface()
+		err error
 	)
-	err := c.ShouldBindBodyWith(args, binding.JSON)
-	//fmt.Println(err)
+	b := binding.Default(c.Request.Method, c.ContentType())
+	err = c.ShouldBindWith(args, b)
 	if err == nil {
 		c.Set("args", args)
 		return true

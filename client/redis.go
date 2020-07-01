@@ -1,8 +1,10 @@
 package client
 
 import (
+	"fmt"
 	"gin-demo/config"
 	"github.com/go-redis/redis/v8"
+	log "github.com/sirupsen/logrus"
 	"strconv"
 )
 
@@ -24,11 +26,13 @@ func (r *RedisCli) Close() {
 
 func getRdbConn(database, user, password, addr string) *redis.Client {
 	db, _ := strconv.Atoi(database)
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: password, // no password set
-		DB:       db,       // use default DB
-	})
+	opt, err := redis.ParseURL(fmt.Sprintf("redis://%s/%d", addr, db))
+	if err != nil {
+		log.WithFields(log.Fields{"database": db, "error": err}).Error("redis connect error")
+		panic(err)
+	}
+	rdb := redis.NewClient(opt)
+	log.WithFields(log.Fields{"database": db}).Info("redis connect success")
 	return rdb
 }
 

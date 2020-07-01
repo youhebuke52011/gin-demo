@@ -1,9 +1,9 @@
 package validater
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	log "github.com/sirupsen/logrus"
 	"strconv"
 	"strings"
 
@@ -38,9 +38,10 @@ func validEnum(v validator.FieldLevel) bool {
 //}
 
 func init() {
-	fmt.Println("init validator!!!")
 	v := binding.Validator.Engine().(*validator.Validate)
-	err := v.RegisterValidation("enum", validEnum)
-	fmt.Println(err)
+	if err := v.RegisterValidation("enum", validEnum); err != nil {
+		panic(err)
+	}
+	log.WithFields(log.Fields{}).Info("validator is ready")
 }
 

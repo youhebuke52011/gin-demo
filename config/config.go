@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -67,7 +68,7 @@ func readConfig(configName string) *viper.Viper {
 
 func init() {
 	// config
-	fmt.Println("config init!!!")
 	conf = readConfig("conf")
+	log.WithFields(log.Fields{}).Info("config is ready")
 	
 }

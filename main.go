@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"gin-demo/client"
 	_ "gin-demo/common/validater"
 	_ "gin-demo/config"
 	"gin-demo/core"
 	"gin-demo/core/middleware"
+	"gin-demo/module/cron"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -16,7 +16,6 @@ import (
 var Engine *gin.Engine
 
 func init() {
-	fmt.Println("init main!!!")
 	log.SetLevel(log.DebugLevel)
 	//log.SetOutput(os.Stdout)
 	go func() {
@@ -28,6 +27,7 @@ func init() {
 func cancel() {
 	client.GetMysqlCli().Close()
 	client.GetRedisCli().Close()
+	cron.Close()
 }
 
 func main() {

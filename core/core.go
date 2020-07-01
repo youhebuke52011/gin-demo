@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"reflect"
 )
@@ -19,11 +18,6 @@ func HandleCore(typ reflect.Type, handle FunHandle, checks []CheckHandle) func(*
 		}
 		handle(c)
 	}
-}
-
-
-func init() {
-	fmt.Println("init core")
 }
 
 

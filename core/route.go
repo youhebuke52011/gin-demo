@@ -29,7 +29,7 @@ func SetupRouter(engine *gin.Engine) {
 	//userGroup.Use(test.SetUp())
 	{
 
-		userGroup.GET("/:id", HandleCore(
+		userGroup.GET("", HandleCore(
 			reflect.TypeOf(user.GetEntity{}), user.Get, []CheckHandle{middleware.BindParam}))
 
 		userGroup.POST("", middleware.TestMiddleWare(), HandleCore(

@@ -39,6 +39,7 @@ func main() {
 	defer cancel()
 
 	// 路由设置
+	//  middleware.Sign()
 	Engine.Use(middleware.Exception(), middleware.Logger())
 	core.SetupRouter(Engine)
 	Engine.Run(":6666")

@@ -20,22 +20,23 @@ func BindParam(c *gin.Context) bool {
 		args = argv.Interface()
 		err error
 	)
-	b := binding.Default(c.Request.Method, c.ContentType())
-	err = c.ShouldBindWith(args, b)
+	if c.Request.Method == http.MethodPost {
+		err = c.ShouldBindBodyWith(args, binding.JSON)
+	} else {
+		err = c.ShouldBindWith(args, binding.Form)
+	}
 	if err == nil {
 		c.Set("args", args)
 		return true
 	}
 	switch err.(type) {
 	case validator.ValidationErrors:
-		fmt.Println(1)
 		errs := err.(validator.ValidationErrors)
 		for _, f := range errs {
 			tip := fmt.Sprintf("field:%s,rule:%s", strings.ToLower(f.Field()), f.Tag())
 			tips = append(tips, tip)
 		}
 	case *json.UnmarshalTypeError:
-		fmt.Println(2)
 		errs := err.(*json.UnmarshalTypeError)
 		tip := fmt.Sprintf("field:%s,rule:type", strings.ToLower(errs.Field))
 		tips = append(tips, tip)
@@ -46,6 +47,6 @@ func BindParam(c *gin.Context) bool {
 		etip = strings.Join(tips, "|")
 	}
 	//fmt.Println(etip)
-	c.JSON(http.StatusOK, gin.H{"code": 400, "msg": etip, "data": gin.H{}})
+	c.JSON(http.StatusBadRequest, gin.H{"code": 400001, "msg": etip, "data": gin.H{}})
 	return false
 }

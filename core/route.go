@@ -26,14 +26,12 @@ func SetupRouter(engine *gin.Engine) {
 	})
 
 	userGroup := engine.Group("/user")
-	//userGroup.Use(test.SetUp())
 	{
-
 		userGroup.GET("", HandleCore(
-			reflect.TypeOf(user.GetEntity{}), user.Get, []CheckHandle{middleware.RateLimit, middleware.BindParam}))
+			reflect.TypeOf(user.GetEntity{}), user.Get, []CheckHandle{middleware.BindParam, middleware.Sign, middleware.RateLimit}))
 
 		userGroup.POST("", middleware.TestMiddleWare(), HandleCore(
-			reflect.TypeOf(user.AddEntity{}), user.Add, []CheckHandle{middleware.BindParam}))
+			reflect.TypeOf(user.AddEntity{}), user.Add, []CheckHandle{middleware.BindParam, middleware.Sign}))
 	}
 
 	engine.GET("/test/gz", gzip.Gzip(gzip.DefaultCompression), tg.TGzip)

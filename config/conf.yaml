@@ -10,3 +10,13 @@ redis:
     password:
     addr: 127.0.0.1:6379
     database: 1
+
+app:
+  6767:
+    appsecret: "55c801fac0b14dbb8c7eed72eb318f5b"
+    name: "test1"
+    desc: "test1"
+  6969:
+    appsecret: "*s^iO#G70*"
+    name: "test2"
+    desc: "test2"

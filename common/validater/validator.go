@@ -1,7 +1,7 @@
 package validater
 
 import (
-	"gin-demo/config"
+	"gin-demo/configs"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	log "github.com/sirupsen/logrus"
@@ -31,7 +31,7 @@ func validEnum(v validator.FieldLevel) bool {
 func validAppID(v validator.FieldLevel) bool {
 	fvals, _, _ := v.ExtractType(v.Field())
 	pid := strconv.FormatInt(fvals.Int(), 10)
-	appMap := config.GetConf().GetStringMap("app")
+	appMap := configs.GetConf().GetStringMap("app")
 	if _, ok := appMap[pid]; ok {
 		return true
 	}

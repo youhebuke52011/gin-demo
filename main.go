@@ -2,7 +2,7 @@ package main
 
 import (
 	_ "gin-demo/common/validater"
-	_ "gin-demo/config"
+	_ "gin-demo/configs"
 	"gin-demo/core"
 	"gin-demo/core/middleware"
 	"gin-demo/module/cron"

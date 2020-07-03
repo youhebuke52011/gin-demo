@@ -2,7 +2,7 @@ package client
 
 import (
 	"fmt"
-	"gin-demo/config"
+	"gin-demo/configs"
 	"github.com/go-redis/redis/v8"
 	log "github.com/sirupsen/logrus"
 	"strconv"
@@ -37,7 +37,7 @@ func getRdbConn(database, user, password, addr string) *redis.Client {
 }
 
 func init() {
-	conf := config.GetConf()
+	conf := configs.GetConf()
 	demoConf := conf.GetStringMapString("redis.demo")
 	redisCli = &RedisCli{
 		Demo: getRdbConn(demoConf["database"], "", demoConf["password"], demoConf["addr"]),

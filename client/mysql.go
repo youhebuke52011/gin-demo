@@ -2,7 +2,7 @@ package client
 
 import (
 	"fmt"
-	"gin-demo/config"
+	"gin-demo/configs"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
@@ -36,7 +36,7 @@ func getMysqlConn(database, user, password, addr string) *gorm.DB {
 }
 
 func init() {
-	conf := config.GetConf()
+	conf := configs.GetConf()
 	demoConf := conf.GetStringMapString("mysql.demo")
 	mysqlCli = &MysqlCli{
 		Demo: getMysqlConn(demoConf["database"], demoConf["user"], demoConf["password"], demoConf["addr"]),

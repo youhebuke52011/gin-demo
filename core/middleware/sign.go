@@ -3,7 +3,7 @@ package middleware
 import (
 	"crypto/md5"
 	"fmt"
-	"gin-demo/config"
+	"gin-demo/configs"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"reflect"
@@ -17,7 +17,7 @@ func Sign(c *gin.Context) bool {
 		vals      = reflect.Indirect(reflect.ValueOf(args))
 		appId     = vals.FieldByName("AppID").Int()
 		md5cal    = md5.New()
-		appMap    = config.GetConf().GetStringMap("app")
+		appMap    = configs.GetConf().GetStringMap("app")
 		appSecret = appMap[strconv.Itoa(int(appId))].(map[string]interface{})["appsecret"]
 	)
 	if c.Request.Method == http.MethodPost {

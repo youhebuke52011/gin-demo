@@ -3,7 +3,7 @@ package user
 import (
 	"fmt"
 	"gin-demo/client"
-	"gin-demo/config"
+	"gin-demo/configs"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
@@ -15,9 +15,10 @@ func Add(c *gin.Context) {
 	var (
 		args   = c.Keys["args"].(*AddEntity)
 		result = gin.H{"code": 200, "msg": "ok", "data": gin.H{}}
-		user = User{
+		user   = User{
 			Id:   args.Id,
 			Name: args.Name,
+			Age:  args.Age,
 		}
 	)
 
@@ -34,9 +35,9 @@ func Get(c *gin.Context) {
 	var (
 		args   = c.Keys["args"].(*GetEntity)
 		result = gin.H{"code": 200, "msg": "ok", "data": gin.H{}}
-		user = User{}
+		user   = User{}
 	)
-	appMap := config.GetConf().GetStringMap("app")
+	appMap := configs.GetConf().GetStringMap("app")
 	fmt.Println(strconv.Itoa(args.AppID))
 	fmt.Println(appMap[strconv.Itoa(args.AppID)])
 

@@ -1,4 +1,4 @@
-package config
+package configs
 
 import (
 	"fmt"
@@ -58,7 +58,7 @@ func readConfig(configName string) *viper.Viper {
 	v := viper.New()
 
 	v.SetConfigName(configName) // name of config file (without extension)
-	v.AddConfigPath("./config/")        // optionally look for config in the working directory
+	v.AddConfigPath("./configs/")        // optionally look for config in the working directory
 	err := v.ReadInConfig()     // Find and read the config file
 	if err != nil {             // Handle errors reading the config file
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))

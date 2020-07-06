@@ -23,7 +23,9 @@ func SetupRouter(engine *gin.Engine) {
 		c.JSON(200, gin.H{
 			"msg": "pong",
 		})
-	})
+	}, gin.BasicAuth(gin.Accounts{
+
+	}))
 
 	userGroup := engine.Group("/user")
 	{

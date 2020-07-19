@@ -33,5 +33,5 @@ func TGzip(ctx *gin.Context) {
 	if err := rds.Set(ctx, "gz", string(sb), 10*time.Minute).Err(); err != nil {
 		log.WithFields(log.Fields{"err": err.Error()}).Error("redis")
 	}
-	ctx.JSON(http.StatusOK, &gin.H{"data": res})
+	ctx.JSON(http.StatusOK, &gin.H{"data": res, "code": 200})
 }

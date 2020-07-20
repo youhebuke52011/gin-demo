@@ -10,6 +10,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/jinzhu/gorm v1.9.14
 	github.com/mattn/go-colorable v0.1.6
+	github.com/nanmu42/gzip v1.0.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/viper v1.7.0

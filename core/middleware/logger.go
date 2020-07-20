@@ -15,6 +15,7 @@ type logRowWrite struct {
 	buf *bytes.Buffer
 }
 
+//const SIZE int = 50
 var logRowChannel = make(chan string, 100)
 
 func (lgw logRowWrite) Write(sb []byte) (int, error) {

@@ -23,9 +23,7 @@ func SetupRouter(engine *gin.Engine) {
 		c.JSON(200, gin.H{
 			"msg": "pong",
 		})
-	}, gin.BasicAuth(gin.Accounts{
-
-	}))
+	})
 
 	userGroup := engine.Group("/user")
 	{
@@ -36,5 +34,11 @@ func SetupRouter(engine *gin.Engine) {
 			reflect.TypeOf(user.AddEntity{}), user.Add, []CheckHandle{middleware.BindParam, middleware.Sign}))
 	}
 
-	engine.GET("/test/gz", gzip.Gzip(gzip.DefaultCompression), tg.TGzip)
+	testGroup := engine.Group("/test")
+	testGroup.Use(gzip.Gzip(gzip.DefaultCompression))
+	{
+		testGroup.GET("/gz", HandleCore(
+			reflect.TypeOf(user.AddEntity{}), tg.TGzip, []CheckHandle{}))
+	}
+
 }

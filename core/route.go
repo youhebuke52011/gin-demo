@@ -34,7 +34,8 @@ func SetupRouter(engine *gin.Engine) {
 			reflect.TypeOf(user.AddEntity{}), user.Add, []CheckHandle{middleware.BindParam, middleware.Sign}))
 	}
 
-	engine.GET("/v2/test/gz", gzip.Gzip(gzip.DefaultCompression), tg.TGzip)
+	engine.GET("/v2/test/gz", gzip.Gzip(gzip.BestSpeed), tg.TGzip)
+	engine.GET("/v2/singer/list", tg.SingerList)
 	engine.POST("/v2/user/login", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"data": "login",

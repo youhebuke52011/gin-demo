@@ -33,5 +33,51 @@ func TGzip(ctx *gin.Context) {
 	if err := rds.Set(ctx, "gz", string(sb), 1*time.Second).Err(); err != nil {
 		log.WithFields(log.Fields{"err": err.Error()}).Error("redis")
 	}
+	//fmt.Println(res)
 	ctx.JSON(http.StatusOK, &gin.H{"data": res, "code": 200})
+}
+
+func SingerList(ctx *gin.Context) {
+	data := []map[string]string{
+		{
+		"singer_id":   "420",
+		"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20180622/20180622193316603.jpg",
+		"singer_name": "陈奕迅",
+		},
+		{
+			"singer_id":   "3520",
+			"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20180515/20180515002522714.jpg",
+			"singer_name": "周杰伦",
+		},
+		{
+			"singer_id":   "3521",
+			"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20200706/20200706184106791.jpg",
+			"singer_name": "张学友",
+		},
+		{
+			"singer_id":   "2351",
+			"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20160704/20160704122242573282.jpg",
+			"singer_name": "齐秦",
+		},
+		{
+			"singer_id":   "1573",
+			"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20180507/20180507120242140.jpg",
+			"singer_name": "刘德华",
+		},
+		{
+			"singer_id":   "3539",
+			"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20200116/20200116112014747.jpg",
+			"singer_name": "张杰",
+		},
+		{
+			"singer_id":   "1574",
+			"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20191017/20191017142309922.jpg",
+			"singer_name": "林俊杰",
+		},
+		{
+			"singer_id":   "93475",
+			"singer_img":  "http://singerimg.kugou.com/uploadpic/pass/softhead/480/20191209/20191209164452855.jpg",
+			"singer_name": "李荣浩",
+		}}
+	ctx.JSON(http.StatusOK, &gin.H{"data": gin.H{"singers": data}, "code": 200})
 }

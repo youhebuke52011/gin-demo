@@ -42,6 +42,6 @@ func main() {
 	//  middleware.Sign()
 	Engine.Use(middleware.Exception(), middleware.Logger())
 	core.SetupRouter(Engine)
-	Engine.Run(":6666")
+	Engine.Run(":6667")
 
 }

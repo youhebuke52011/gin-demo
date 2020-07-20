@@ -64,7 +64,7 @@ func Logger() gin.HandlerFunc {
 			"response_time":     endTime-startTime,
 			"response_code":     resp.Code,
 			"response_msg":      resp.Msg,
-			//"response_data":     resp.Data,
+			"response_data":     resp.Data,
 		}
 		accLogJson, _ := common.Encode(accLogMap)
 		logRowChannel <- accLogJson

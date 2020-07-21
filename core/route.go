@@ -2,6 +2,7 @@ package core
 
 import (
 	"gin-demo/core/middleware"
+	"gin-demo/module/singer"
 	tg "gin-demo/module/test"
 	"gin-demo/module/user"
 	"github.com/gin-gonic/contrib/gzip"
@@ -35,7 +36,11 @@ func SetupRouter(engine *gin.Engine) {
 	}
 
 	engine.GET("/v2/test/gz", gzip.Gzip(gzip.BestSpeed), tg.TGzip)
-	engine.GET("/v2/singer/list", tg.SingerList)
+	engine.GET("/v2/singer/list", singer.List)
+	engine.GET("/v2/singer/detail", singer.Detail)
+	engine.POST("/v2/singer/add", HandleCore(reflect.TypeOf(singer.AddEntity{}), singer.Add, []CheckHandle{middleware.BindParam}))
+	engine.POST("/v2/singer/update", HandleCore(reflect.TypeOf(singer.AddEntity{}), singer.Update, []CheckHandle{middleware.BindParam}))
+	engine.GET("/v2/singer/delete", singer.Delete)
 	engine.POST("/v2/user/login", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"data": "login",
